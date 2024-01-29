@@ -1,0 +1,234 @@
+@font-face {
+    font-family: 'Alien Encounters';
+    src: url('../../public/fonts/Alien-Encounters-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@keyframes neonGlow {
+    0%,
+    100% {
+        text-shadow: 0 0 10px rgba(0, 255, 255, 0.7),
+            0 0 20px rgba(255, 0, 255, 0.7), 0 0 30px rgba(0, 255, 255, 0.7),
+            0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de,
+            0 0 100px #ff00de;
+    }
+    50% {
+        text-shadow: 0 0 5px rgba(0, 255, 255, 0.7),
+            0 0 10px rgba(255, 0, 255, 0.7), 0 0 15px rgba(0, 255, 255, 0.7),
+            0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #ff00de,
+            0 0 50px #ff00de;
+    }
+}
+
+@keyframes gradientBackground {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    color: white;
+    background: linear-gradient(45deg, #1a1a1a, #333); // Fond sombre
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    font-family: 'Alien Encounters', sans-serif;
+
+    // Pseudo-élément pour la bordure inférieure animée
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 4px; // Épaisseur de la bordure animée
+        background: linear-gradient(45deg, #ff00cc, #333399,rgba(74, 0, 224, 0.7),rgba(186, 0, 255, 0.7));
+        background-size: 400% 400%;
+        animation: gradientBackground 15s ease infinite;
+    }
+
+    // Animation pour le fond de la bordure
+    @keyframes gradientBackground {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    // Styles supplémentaires pour les liens de navigation
+    .header-nav ul li a {
+        text-transform: uppercase; // Style de police Synthwave typique
+        letter-spacing: 0.1em; // Espacement des lettres pour un effet rétro
+        // Ajoutez d'autres styles de police Synthwave ici si nécessaire
+    }
+
+    .header-brand {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .header-logo {
+            width: 250px;
+            height: auto;
+            margin-right: 20px;
+            // Combinaison des animations de grésillement et de lueur
+            animation: glitch 1.5s infinite,
+                neonGlow 3s ease-in-out infinite alternate;
+
+            // Keyframes pour l'animation de grésillement
+            @keyframes glitch {
+                0%,
+                100% {
+                    opacity: 1;
+                    filter: none;
+                }
+                10%,
+                30%,
+                50%,
+                70%,
+                90% {
+                    opacity: 0.6;
+                    filter: blur(0.02em);
+                }
+                20%,
+                40%,
+                60%,
+                80% {
+                    opacity: 0.8;
+                    filter: blur(0.01em);
+                }
+            }
+
+            // Keyframes pour l'animation de lueur néon bleue et violette
+            @keyframes neonGlow {
+                0%,
+                100% {
+                    filter: drop-shadow(0 0 5px rgba(74, 0, 224, 0.7))
+                        drop-shadow(0 0 15px rgba(74, 0, 224, 0.7))
+                        drop-shadow(0 0 25px rgba(74, 0, 224, 0.7))
+                        drop-shadow(0 0 35px rgba(0, 0, 255, 0.7));
+                }
+                50% {
+                    filter: drop-shadow(0 0 8px rgba(186, 0, 255, 0.7))
+                        drop-shadow(0 0 18px rgba(186, 0, 255, 0.7))
+                        drop-shadow(0 0 28px rgba(186, 0, 255, 0.7))
+                        drop-shadow(0 0 38px rgba(0, 0, 255, 0.7));
+                }
+            }
+        }
+    }
+
+    .header-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+
+            li {
+                margin: 0 20px;
+
+                a {
+                    position: relative;
+                    color: #fff;
+                    text-decoration: none;
+                    font-size: 1.2rem;
+                    padding: 0.5rem 1rem;
+                    display: inline-block;
+                    overflow: hidden;
+
+                    // Pseudo-elements for RGB glitch effect
+                    &::before,
+                    &::after {
+                        content: attr(data-text);
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        overflow: hidden;
+                        clip-path: inset(0 0 0 0);
+                        opacity: 0; // Start with lower opacity
+                        transition: opacity 0.3s ease;
+                    }
+
+                    &::before {
+                        color:rgba(74, 0, 224, 0.7); // Red color, more transparent
+                        transform: translate(-2px, 0);
+                        animation: glitch-rgb 2s infinite linear
+                            alternate-reverse;
+                    }
+
+                    &::after {
+                        color:rgba(186, 0, 255, 0.7); // Green color, more transparent
+                        transform: translate(2px, 0);
+                        animation: glitch-rgb 1.5s infinite linear alternate;
+                    }
+
+                    // Hover effect
+                    &:hover::before,
+                    &:hover::after {
+                        opacity: 1;
+                    }
+
+                    // Animation for more frequent blinking
+                    &:hover {
+                        animation: blink-random 0.5s infinite step-end;
+                    }
+                }
+            }
+        }
+    }
+
+    @keyframes glitch-rgb {
+        0%,
+        100% {
+            clip-path: inset(0 45% 0 0);
+        }
+        20% {
+            clip-path: inset(0 10% 0 45%);
+        }
+        40% {
+            clip-path: inset(45% 45% 0 0);
+        }
+        60% {
+            clip-path: inset(0 45% 45% 0);
+        }
+        80% {
+            clip-path: inset(0 10% 0 45%);
+        }
+    }
+
+    @keyframes blink-random {
+        0%,
+        50% {
+            color: transparent;
+        }
+        25%,
+        75% {
+            color: #fff;
+        }
+    }
+
+    // Si vous avez d'autres éléments tels que des boutons ou des liens, vous pouvez appliquer le même effet de néon.
+    .menu-toggle {
+        display: none;
+    }
+}
